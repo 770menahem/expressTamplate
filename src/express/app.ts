@@ -38,7 +38,7 @@ class App {
 
     private initializeRouters(): void {
         this.routers.forEach((router) => {
-            this.app.use(router.path, router.router);
+            this.app.use('/api'+router.path, router.router);
         });
         this.app.use(errorMiddleware);
     }
