@@ -1,15 +1,11 @@
 import mongoose from 'mongoose';
 import User from '../../types/user.type';
+import { BaseRepository } from '../../core/baserepository';
 import { IUserRepo } from '../../interfaces/userRepo.interface';
-import { logInfo } from '../../log/logger';
 
-export class UserRepo implements IUserRepo {
+export class UserRepo extends BaseRepository<User> implements IUserRepo {
     private UserModel: mongoose.Model<User>;
 
-    constructor(userModel: mongoose.Model<User>) {
-        logInfo('UserRepo created');
-        this.UserModel = userModel;
-    }
 
     public getUserById = async (userId: string): Promise<User | null> => {
         const user = await this.UserModel.findById(userId, { password: 0 });

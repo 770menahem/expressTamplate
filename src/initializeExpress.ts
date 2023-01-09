@@ -1,19 +1,21 @@
 import { UserRepo } from './mongo/repo/user.repo';
 import App from './express/app';
 import UserRouter from './express/routes/user.route';
-import { userModel } from './mongo/models/user.model';
+import { blogSchema} from './mongo/models/blog.model';
+import { userSchema } from './mongo/models/user.model';
 import { UserService } from './express/services/user.service';
 import { UserController } from './express/controllers/user.controller';
 import { BlogController } from './express/controllers/blog.controller';
 import BlogRouter from './express/routes/blog.route';
 import { BlogService } from './express/services/blog.service';
-import blogModel from './mongo/models/blog.model';
 import { BlogRepo } from './mongo/repo/blog.repo';
 import Auth from './express/services/auth.service';
+import conn from './mongo/initializeMongo';
+import config from './config/config';
 
 export function initializeExpress(port: any) {
-    const userRepo = new UserRepo(userModel);
-    const blogRepo = new BlogRepo(blogModel);
+    const userRepo = new UserRepo(conn,config.mongo.userCollectionName,userSchema);
+    const blogRepo = new BlogRepo(conn,config.mongo.blogCollectionName,blogSchema);
 
     const userService = new UserService(userRepo);
     const blogService = new BlogService(blogRepo);

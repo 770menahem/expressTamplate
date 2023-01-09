@@ -1,48 +1,38 @@
-import mongoose from 'mongoose';
 import Blog from '../../types/blog.type';
+import { BaseRepository } from '../../core/baserepository';
 import { IBlogRepo } from '../../interfaces/blogRepo.interface';
-import { logInfo } from '../../log/logger';
 
-export class BlogRepo implements IBlogRepo {
-    private BlogModel: mongoose.Model<Blog>;
 
-    constructor(blogModel: mongoose.Model<Blog>) {
-        logInfo('BlogRepo created');
-        this.BlogModel = blogModel;
-    }
+export class BlogRepo extends BaseRepository<Blog> implements IBlogRepo {
 
     public createBlog = async (blog: Blog): Promise<Blog> => {
-        const newBlog = await this.BlogModel.create(blog);
-        return newBlog;
+        return await this.create(blog);
+        
     };
 
     public updateBlog = async (blogId: string, description: string): Promise<Blog | null> => {
-        const blog = await this.BlogModel.findByIdAndUpdate(blogId, { description }, { new: true });
-        return blog;
+        return await this.update(blogId, { description });
+        
     };
 
     public deleteBlog = async (blogId: string): Promise<Blog | null> => {
-        const blog = await this.BlogModel.findByIdAndDelete(blogId);
-        return blog;
+        return await this.delete(blogId);
     };
 
     public getBlog = async (blogId: string): Promise<Blog | null> => {
-        const blog = await this.BlogModel.findById(blogId).populate('author');
+        const blog = await this.findById(blogId);
         return blog;
     };
 
-    public getAllBlogs = async (): Promise<Blog[] | null> => {
-        try {
-            const blogs = await this.BlogModel.find({}).populate('author');
-            return blogs;
-        } catch (error) {
-            return null;
-        }
+    public getAllBlogs = async (): Promise<Blog[]> => {
+        const blogs = await this.find();
+        return blogs;
+        
     };
 
     public getBlogsByAuthor = async (userName: string): Promise<Blog[] | null> => {
         try {
-            const blogs = await this.BlogModel.aggregate([
+            const blogs: Blog[] = await this._model.aggregate([
                 {
                     $lookup: {
                         from: 'users',

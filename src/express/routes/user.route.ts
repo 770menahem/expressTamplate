@@ -3,30 +3,24 @@ import * as express from 'express';
 import { wrapController } from '../utils/wraps';
 import { updateSchema, createSchema } from '../joi/validator/user.schema';
 import validateRequest from '../joi/joi';
-class UserRouter {
-    public path: string = '/users';
-    public router = express.Router();
-    private userController: IUserController;
-    private auth: express.RequestHandler;
+import { BaseRouter } from '../../core/baserouter';
+
+class UserRouter extends BaseRouter<IUserController> {
 
     constructor(userController: IUserController, auth: express.RequestHandler) {
-        this.userController = userController;
-        this.auth = auth;
+        super(userController,auth)
+        this.path =  '/users';
         this.initializeRoutes();
     }
 
-    public getRouter() {
-        return this.router;
-    }
-
     public initializeRoutes() {
-        this.router.post('/login', wrapController(this.userController.login));
-        this.router.post('', validateRequest(createSchema), wrapController(this.userController.createUser));
+        this.router.post('/login', wrapController(this.getController().login));
+        this.router.post('', validateRequest(createSchema), wrapController(this.getController().createUser));
         this.router.use(this.auth);
-        this.router.get('', wrapController(this.userController.getAllUsers));
-        this.router.get('/:userId', wrapController(this.userController.getUserById));
-        this.router.put('/:userId', validateRequest(updateSchema), wrapController(this.userController.updateUser));
-        this.router.delete('/:userId', wrapController(this.userController.deleteUser));
+        this.router.get('', wrapController(this.getController().getAllUsers));
+        this.router.get('/:userId', wrapController(this.getController().getUserById));
+        this.router.put('/:userId', validateRequest(updateSchema), wrapController(this.getController().updateUser));
+        this.router.delete('/:userId', wrapController(this.getController().deleteUser));
     }
 }
 

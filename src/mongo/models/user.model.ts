@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import config from '../../config/config';
-import User from '../../types/user.type';
 
 export const userSchema = new mongoose.Schema(
     {
@@ -13,4 +11,4 @@ export const userSchema = new mongoose.Schema(
     { versionKey: false },
 );
 
-export const userModel = mongoose.model<User>(config.mongo.userCollectionName, userSchema);
+// export const userModel = mongoose.model<User>(config.mongo.userCollectionName, userSchema);

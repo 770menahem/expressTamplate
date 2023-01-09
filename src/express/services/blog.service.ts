@@ -1,7 +1,7 @@
 import Blog from '../../types/blog.type';
-import { IBlogRepo } from '../../interfaces/blogRepo.interface';
 import { IBlogService } from '../../interfaces/blogService.interface';
 import { logInfo } from '../../log/logger';
+import { IBlogRepo } from '../../interfaces/blogRepo.interface';
 
 export class BlogService implements IBlogService {
     private BlogRepo: IBlogRepo;
@@ -10,9 +10,9 @@ export class BlogService implements IBlogService {
         this.BlogRepo = blogRepo;
     }
 
-    public createBlog = async (blog: Blog) => {
-        const newBlog = await this.BlogRepo.createBlog(blog);
-        return newBlog;
+    public createBlog = async (blog: Blog) : Promise<Blog>=> {
+        return await this.BlogRepo.createBlog(blog);
+  
     };
 
     public updateBlog = async (blogId: string, description: string) => {

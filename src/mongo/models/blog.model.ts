@@ -4,7 +4,7 @@ import Blog from '../../types/blog.type';
 
 const { mongo } = config;
 
-const blogSchema = new mongoose.Schema<Blog>(
+export const blogSchema = new mongoose.Schema<Blog>(
     {
         _id: { type: mongoose.Schema.Types.ObjectId, required: false, auto: true, select: true },
         title: { type: String, required: true, unique: true },
@@ -16,6 +16,6 @@ const blogSchema = new mongoose.Schema<Blog>(
     { versionKey: false },
 );
 
-const blogModel = mongoose.model<Blog>(mongo.blogCollectionName, blogSchema);
+// const blogModel = mongoose.model<Blog>(mongo.blogCollectionName, blogSchema);
 
-export default blogModel;
+// export default blogModel;
