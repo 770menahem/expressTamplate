@@ -22,7 +22,7 @@ class App {
         this.routers = routers;
         this.app = express();
         this.config();
-        this.start();
+        this.initializeRouters();
     }
 
     public getApp(): express.Application {
@@ -44,7 +44,6 @@ class App {
     }
 
     public async start(): Promise<void> {
-        this.initializeRouters();
         this.server = this.app.listen(this.port, () => logInfo(`Server started on port ${this.port}`));
     }
 

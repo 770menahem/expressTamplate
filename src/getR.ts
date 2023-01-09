@@ -1,48 +1,49 @@
 import { writeFileSync } from 'fs';
-import app from './express/app';
+import { initializeExpress } from './initializeExpress';
 
 (async () => {
-    // console.log(
-    //   app._router.stack // registered routes
-    //     .filter((r) => r.route) // take out all the middleware
-    //     .map((r) => r.route.path)
-    // );
-    const routers: string[] = [];
-    function print(path, layer) {
-        if (layer.route) {
-            layer.route.stack.forEach(print.bind(null, path.concat(split(layer.route.path))));
-        } else if (layer.name === 'router' && layer.handle.stack) {
-            layer.handle.stack.forEach(print.bind(null, path.concat(split(layer.regexp))));
-        } else if (layer.method) {
-            routers.push(layer.method.toUpperCase() + ' ' + path.concat(split(layer.regexp)).filter(Boolean).join('/'));
-        }
-    }
+    const app = initializeExpress(10).getApp();
+    const r = app['_router'];
+    const s = r.stack;
+    const routes = getRoutes(s);
+    console.log(routes);
 
-    function split(thing) {
-        if (typeof thing === 'string') {
-            return thing.split('/');
-        } else if (thing.fast_slash) {
-            return '';
-        } else {
-            var match = thing
-                .toString()
-                .replace('\\/?', '')
-                .replace('(?=\\/|$)', '$')
-                .match(/^\/\^((?:\\[.*+?^${}()|[\]\\\/]|[^.*+?^${}()|[\]\\\/])*)\$\//);
-            return match ? match[1].replace(/\\(.)/g, '$1').split('/') : '<complex:' + thing.toString() + '>';
-        }
-    }
-
-    app['_router'].stack.forEach(print.bind(null, []));
-
-    console.log(routers);
-
-    // writeFileSync('swager.txt', ``);
-
-    // const all: { url?: string; method?: string; param?: string[] }[] = [];
-
-    writeFileSync('./routers.json', JSON.stringify([...new Set(routers)]));
-    // writeFileSync('./obj.json', JSON.stringify(all));
+    // Write routes to a file
+    writeFileSync('./routers.json', JSON.stringify([...new Set(routes)]));
 })();
 
-console.log('dd');
+// Function to extract routes from the router stack
+function getRoutes(stack: any[], path: string[] = []): string[] {
+    const routes: string[] = [];
+
+    for (const layer of stack) {
+        if (layer.route) {
+            // Handle nested routes
+            routes.push(...getRoutes(layer.route.stack, path.concat(split(layer.route.path))));
+        } else if (layer.name === 'router' && layer.handle.stack) {
+            // Handle nested routers
+            routes.push(...getRoutes(layer.handle.stack, path.concat(split(layer.regexp))));
+        } else if (layer.method) {
+            // Add route to list
+            routes.push(layer.method.toUpperCase() + ' ' + path.concat(split(layer.regexp)).filter(Boolean).join('/'));
+        }
+    }
+
+    return routes;
+}
+
+// Function to split a path or regexp into an array of parts
+function split(thing) {
+    if (typeof thing === 'string') {
+        return thing.split('/');
+    } else if (thing.fast_slash) {
+        return '';
+    } else {
+        const match = thing
+            .toString()
+            .replace('\\/?', '')
+            .replace('(?=\\/|$)', '$')
+            .match(/^\/\^((?:\\[.*+?^${}()|[\]\\\/]|[^.*+?^${}()|[\]\\\/])*)\$\//);
+        return match ? match[1].replace(/\\(.)/g, '$1').split('/') : '<complex:' + thing.toString() + '>';
+    }
+}
