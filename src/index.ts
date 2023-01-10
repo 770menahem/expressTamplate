@@ -1,6 +1,6 @@
-import {connect} from './mongo/initializeMongo';
+import { connect } from './mongo/initializeMongo';
 import config from './config/config';
-import { initializeExpress } from './initializeExpress';
+import { initializeApp } from './initializeExpress';
 
 const { mongo } = config;
 
@@ -13,7 +13,7 @@ const main = async () => {
 
     const port = config.server.port || 2770;
 
-    const app = initializeExpress(port);
+    const app = initializeApp(port);
 
     app.start();
 };

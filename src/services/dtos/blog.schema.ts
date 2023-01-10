@@ -4,6 +4,12 @@ import * as BaseJoi from 'joi';
 const Joi = BaseJoi.extend(JoiDate);
 Joi.objectId = require('joi-objectid')(Joi);
 
+export type createBlogDTO = {
+    title: string;
+    description: string;
+    author: string;
+};
+
 export const createSchema = Joi.object({
     body: {
         title: Joi.string().required(),

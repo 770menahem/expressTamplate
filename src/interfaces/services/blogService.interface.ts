@@ -1,4 +1,4 @@
-import Blog from '../types/blog.type';
+import Blog from '../../types/blog.type';
 
 export interface IBlogService {
     createBlog(blog: Blog): Promise<Blog>;

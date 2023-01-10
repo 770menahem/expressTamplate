@@ -1,16 +1,16 @@
-import { generateToken } from '../../auth/token';
-import { IUserRepo } from '../../interfaces/userRepo.interface';
-import { IUserService } from '../../interfaces/userService.interface';
-import { logInfo } from '../../log/logger';
-import User from '../../types/user.type';
-import { decrypt, encrypt } from '../../utils/encrypt';
+import { generateToken } from '../auth/token';
+import { IUserDal } from '../interfaces/userRepo.interface';
+import { IUserService } from '../interfaces/userService.interface';
+import { logInfo } from '../log/logger';
+import User from '../types/user.type';
+import { decrypt, encrypt } from '../utils/encrypt';
 import { verify } from 'jsonwebtoken';
-import config from '../../config/config';
+import config from '../config/config';
 
 export class UserService implements IUserService {
-    private UserRepo: IUserRepo;
+    private UserRepo: IUserDal;
 
-    constructor(userRepo: IUserRepo) {
+    constructor(userRepo: IUserDal) {
         logInfo('UserService created');
         this.UserRepo = userRepo;
     }

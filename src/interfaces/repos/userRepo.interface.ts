@@ -1,6 +1,6 @@
 import User from '../types/user.type';
 
-export interface IUserRepo {
+export interface IUserDal {
     getUserById(userId: string): Promise<User | null>;
     getUserByNameAndPassword(name: string, arg1: string): Promise<User | null>;
     createUser(user: User): Promise<User>;

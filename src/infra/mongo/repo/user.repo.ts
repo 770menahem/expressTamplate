@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import User from '../../types/user.type';
-import { BaseRepository } from '../../core/baserepository';
-import { IUserRepo } from '../../interfaces/userRepo.interface';
+import { BaseRepository } from '../../core/baseRepository';
+import { IUserDal } from '../../interfaces/userRepo.interface';
 
-export class UserRepo extends BaseRepository<User> implements IUserRepo {
+export class UserRepo extends BaseRepository<User> implements IUserDal {
     private UserModel: mongoose.Model<User>;
 
 

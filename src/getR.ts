@@ -1,8 +1,8 @@
 import { writeFileSync } from 'fs';
-import { initializeExpress } from './initializeExpress';
+import { initializeApp } from './initializeExpress';
 
 (async () => {
-    const app = initializeExpress(10).getApp();
+    const app = initializeApp(10).getApp();
     const r = app['_router'];
     const s = r.stack;
     const routes = getRoutes(s);

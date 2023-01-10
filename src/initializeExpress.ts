@@ -1,24 +1,25 @@
 import { UserRepo } from './mongo/repo/user.repo';
 import App from './express/app';
 import UserRouter from './express/routes/user.route';
-import { blogSchema} from './mongo/models/blog.model';
+import { blogSchema } from './mongo/models/blog.model';
 import { userSchema } from './mongo/models/user.model';
-import { UserService } from './express/services/user.service';
+import { UserService } from './services/user.service';
 import { UserController } from './express/controllers/user.controller';
 import { BlogController } from './express/controllers/blog.controller';
 import BlogRouter from './express/routes/blog.route';
-import { BlogService } from './express/services/blog.service';
+import { BlogService } from './services/blog.service';
 import { BlogRepo } from './mongo/repo/blog.repo';
-import Auth from './express/services/auth.service';
+import Auth from './services/auth.service';
 import conn from './mongo/initializeMongo';
 import config from './config/config';
+import Logger from './infra/winston/logger';
 
-export function initializeExpress(port: any) {
-    const userRepo = new UserRepo(conn,config.mongo.userCollectionName,userSchema);
-    const blogRepo = new BlogRepo(conn,config.mongo.blogCollectionName,blogSchema);
+export function initializeApp(port: any) {
+    const userRepo = new UserRepo(conn, config.mongo.userCollectionName, userSchema);
+    const blogRepo = new BlogRepo(conn, config.mongo.blogCollectionName, blogSchema);
 
     const userService = new UserService(userRepo);
-    const blogService = new BlogService(blogRepo);
+    const blogService = new BlogService(blogRepo, Logger);
 
     const userController = new UserController(userService);
     const blogController = new BlogController(blogService);

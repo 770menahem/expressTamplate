@@ -3,18 +3,18 @@ import * as express from 'express';
 import { wrapController } from '../utils/wraps';
 import { updateSchema, createSchema } from '../joi/validator/user.schema';
 import validateRequest from '../joi/joi';
-import { BaseRouter } from '../../core/baserouter';
+import { BaseRouter } from '../../core/baseRouter';
 
 class UserRouter extends BaseRouter<IUserController> {
 
     constructor(userController: IUserController, auth: express.RequestHandler) {
-        super(userController,auth)
-        this.path =  '/users';
+        super(userController, auth)
+        this.path = '/users';
         this.initializeRoutes();
     }
 
     public initializeRoutes() {
-        this.router.post('/login', wrapController(this.getController().login));
+        this.router.post('/login', wrapController(this.controller.login));
         this.router.post('', validateRequest(createSchema), wrapController(this.getController().createUser));
         this.router.use(this.auth);
         this.router.get('', wrapController(this.getController().getAllUsers));

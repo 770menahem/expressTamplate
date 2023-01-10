@@ -4,7 +4,7 @@ import { logInfo } from '../log/logger';
 
 
 // const opts: ConnectOptions = {
-//     useNewUrlParser: true,
+//     useNewUrlParser: true,express
 //     useUnifiedTopology: true,
 //     useCreateIndex: true,
 // };

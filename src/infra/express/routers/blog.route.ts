@@ -2,8 +2,8 @@ import * as express from 'express';
 import { wrapController } from '../utils/wraps';
 import validateRequest from '../joi/joi';
 import { updateSchema, createSchema } from '../../services/dtos/blog.schema';
-import { IBlogController } from '../../infra/express/controllers/blogController.interface';
-import { BaseRouter } from '../../infra/express/routers/baseRouter';
+import { IBlogController } from '../../interfaces/blogController.interface';
+import { BaseRouter } from '../../core/baseRouter';
 
 class BlogRouter extends BaseRouter<IBlogController>{
 

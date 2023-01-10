@@ -1,12 +1,12 @@
-import { Connection,   Model,  Schema } from "mongoose";
-import { logInfo } from "../log/logger";
+import { Connection, FilterQuery, Model, Schema } from "mongoose";
+import { logInfo } from "../../../log/logger";
 
 
 //TODO: MAPPER ?!
 export abstract class BaseRepository<T> {
     public _model: Model<T>
 
-    constructor(db: Connection,  modelName: string , schema: Schema<T>) {
+    constructor(db: Connection, modelName: string, schema: Schema<T>) {
         logInfo(`${modelName} model created successfully`)
         if (db.modelNames().includes(modelName)) {
             this._model = db.model(modelName);
@@ -15,31 +15,36 @@ export abstract class BaseRepository<T> {
         }
     }
 
-    async create(item: T) : Promise<T> {
+    async create(item: T): Promise<T> {
         const resItem = await this._model.create(item);
         return resItem;
 
     }
 
-   async findById(identifier: string) : Promise<T | null> {
-    let raw: T = await this._model.findById(identifier).lean();
-    if (!raw) return null;
-    return raw;
-   }
-   async update(identifier: string,item: Partial<T>): Promise<T | null> {
-    const updatedRes = await this._model.findByIdAndUpdate({_id: identifier},{$set: item})
-    return updatedRes;
+    async findByIdentifier(identifier: FilterQuery<T>): Promise<T | null> {
+        let raw: T = await this._model.findOne(identifier).lean();
+        return raw;
+    }
 
-   }
+    async update(identifier: string, item: Partial<T>): Promise<T | null> {
+        const updatedRes = await this._model.findByIdAndUpdate(identifier, { $set: item })
+        return updatedRes;
+    }
 
-   async delete(identifier: string): Promise<T | null> {
-    const resDelete =await this._model.findByIdAndDelete({_id: identifier})
-    return resDelete;
-   }
-   async find() : Promise<T[]> {
-    let items: T[] = await this._model.find({}).lean();
-    return items;
-   }
+    async deleteByIdentifier(identifier: FilterQuery<T>): Promise<T | null> {
+        const resDelete = await this._model.findOneAndDelete(identifier)
+        return resDelete;
+    }
+
+    async findAll(): Promise<T[]> {
+        let items: T[] = await this._model.find().lean();
+        return items;
+    }
+
+    async findMany(query: FilterQuery<T>): Promise<T[]> {
+        let items: T[] = await this._model.find(query).lean();
+        return items;
+    }
 
 }
 
