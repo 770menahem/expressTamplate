@@ -1,8 +1,8 @@
 import * as request from 'supertest';
-import App from '../src/express/app';
+import App from '../src/infra/express/app';
 import AuthMock from './mocks/auth';
 import BlogControllerMock from './mocks/blogController';
-import BlogRouter from '../src/express/routes/blog.route';
+import BlogRouter from '../src/infra/express/routers/blog.route';
 
 let server: App;
 

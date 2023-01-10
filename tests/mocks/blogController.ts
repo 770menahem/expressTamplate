@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { IBlogController } from './../../src/interfaces/blogController.interface';
+import { IBlogController } from '../../src/infra/express/controllers/blogController.interface';
+
 import Blog from '../../src/types/blog.type';
 
 class BlogControllerMock implements IBlogController {

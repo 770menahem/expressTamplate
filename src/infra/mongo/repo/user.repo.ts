@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
-import User from '../../types/user.type';
-import { BaseRepository } from '../../core/baseRepository';
-import { IUserDal } from '../../interfaces/userRepo.interface';
+import { IUserDal } from '../../../interfaces/repos/userRepo.interface';
+
+import User from '../../../types/user.type';
+import { BaseRepository } from './baseRepository';
 
 export class UserRepo extends BaseRepository<User> implements IUserDal {
     private UserModel: mongoose.Model<User>;
+
 
 
     public getUserById = async (userId: string): Promise<User | null> => {

@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
 
 export interface IBlogController {
     createBlog(req: Request, res: Response): Promise<void>;

@@ -1,14 +1,14 @@
-import { IBlogService } from './../../interfaces/blogService.interface';
 import { Request, Response } from 'express';
-import Blog from '../../types/blog.type';
-import { IBlogController } from '../../interfaces/blogController.interface';
-import { logInfo } from '../../log/logger';
+import { IBlogService } from '../../../interfaces/services/blogService.interface';
+import Blog from '../../../types/blog.type';
 import { ServiceError } from '../utils/error';
+import { IBlogController } from './blogController.interface';
+
 export class BlogController implements IBlogController {
     private blogService: IBlogService;
 
     constructor(blogService: IBlogService) {
-        logInfo('BlogController created');
+        console.log('BlogController created');
         this.blogService = blogService;
     }
 

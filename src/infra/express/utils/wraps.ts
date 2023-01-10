@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export const wrapValidator = (func: (req: Request, res?: Response) => Promise<void>) => {
     return (req: Request, res: Response, next: NextFunction) => {

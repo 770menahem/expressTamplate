@@ -1,4 +1,4 @@
-import User from '../types/user.type';
+import User from "../../types/user.type";
 
 export interface IUserDal {
     getUserById(userId: string): Promise<User | null>;

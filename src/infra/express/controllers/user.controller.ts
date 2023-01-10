@@ -1,16 +1,16 @@
-import { IUserService } from './../../interfaces/userService.interface';
 import { Request, Response } from 'express';
-import { LoginUser } from '../../types/loginUser.type';
-import User from '../../types/user.type';
-import { IUserController } from '../../interfaces/userController.interface';
-import { logInfo } from '../../log/logger';
+import { IUserService } from '../../../interfaces/services/userService.interface';
+import { LoginUser } from '../../../types/loginUser.type';
+import User from '../../../types/user.type';
 import { ServiceError } from '../utils/error';
+import { IUserController } from './userController.interface';
+
 
 export class UserController implements IUserController {
     private UserService: IUserService;
 
     constructor(UserService: IUserService) {
-        logInfo('UserController created');
+        console.log('UserController created');
         this.UserService = UserService;
     }
 

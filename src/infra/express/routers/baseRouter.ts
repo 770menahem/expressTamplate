@@ -1,4 +1,4 @@
-import * as express from "express"
+import * as express from "express";
 // import  BaseController  from "./basecontroller";
 
 export abstract class BaseRouter<T>{

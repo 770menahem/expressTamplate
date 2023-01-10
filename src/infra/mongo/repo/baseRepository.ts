@@ -1,5 +1,4 @@
 import { Connection, FilterQuery, Model, Schema } from "mongoose";
-import { logInfo } from "../../../log/logger";
 
 
 //TODO: MAPPER ?!
@@ -7,7 +6,6 @@ export abstract class BaseRepository<T> {
     public _model: Model<T>
 
     constructor(db: Connection, modelName: string, schema: Schema<T>) {
-        logInfo(`${modelName} model created successfully`)
         if (db.modelNames().includes(modelName)) {
             this._model = db.model(modelName);
         } else {

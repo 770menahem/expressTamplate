@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express-serve-static-core';
-import IAuth from './../../src/interfaces/auth.interface';
+import IAuth from '../../src/infra/express/utils/auth.interface';
 
 class AuthMock implements IAuth {
     public checkAuth: (token: string) => Promise<string | null>;

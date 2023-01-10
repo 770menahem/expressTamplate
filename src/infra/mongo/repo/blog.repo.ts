@@ -1,11 +1,12 @@
-import Blog from '../../types/blog.type';
-import { BaseRepository } from '../../core/baseRepository';
-import { IBlogRepo } from '../../interfaces/blogRepo.interface';
+import { BaseRepository } from './baseRepository';
+import { IBlogRepo } from '../../../interfaces/repos/blogRepo.interface';
+import Blog from '../../../types/blog.type';
+import { createBlogDTO } from '../../../services/dtos/blog.schema';
 
 
 export class BlogRepo extends BaseRepository<Blog> implements IBlogRepo {
 
-    public createBlog = async (blog: Blog): Promise<Blog> => {
+    public createBlog = async (blog: createBlogDTO): Promise<Blog> => {
         return await this.create(blog);
 
     };
@@ -16,16 +17,16 @@ export class BlogRepo extends BaseRepository<Blog> implements IBlogRepo {
     };
 
     public deleteBlog = async (blogId: string): Promise<Blog | null> => {
-        return await this.delete(blogId);
+        return await this.deleteByIdentifier({ _id: blogId });
     };
 
     public getBlog = async (blogId: string): Promise<Blog | null> => {
-        const blog = await this.findById(blogId);
+        const blog = await this.findByIdentifier({ _id: blogId });
         return blog;
     };
 
     public getAllBlogs = async (): Promise<Blog[]> => {
-        const blogs = await this.find();
+        const blogs = await this.findAll();
         return blogs;
 
     };

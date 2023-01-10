@@ -1,6 +1,6 @@
-import { connect } from './mongo/initializeMongo';
 import config from './config/config';
 import { initializeApp } from './initializeExpress';
+import { connect } from './infra/mongo/initializeMongo';
 
 const { mongo } = config;
 

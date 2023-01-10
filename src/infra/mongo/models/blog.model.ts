@@ -1,6 +1,7 @@
+
 import * as mongoose from 'mongoose';
-import config from '../../config/config';
-import Blog from '../../types/blog.type';
+import config from '../../../config/config';
+import Blog from '../../../types/blog.type';
 
 const { mongo } = config;
 

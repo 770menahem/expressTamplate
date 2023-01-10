@@ -1,10 +1,9 @@
-import * as express from 'express';
-import * as logger from 'morgan';
-import { errorMiddleware } from './utils/error';
-import { logInfo } from '../log/logger';
 import * as cors from 'cors';
-import IRouter from '../interfaces/router.interface';
+import * as express from 'express';
 import { Server } from 'http';
+import * as logger from 'morgan';
+import IRouter from './routers/router.interface';
+import { errorMiddleware } from './utils/error';
 
 require('dotenv').config();
 
@@ -38,13 +37,13 @@ class App {
 
     private initializeRouters(): void {
         this.routers.forEach((router) => {
-            this.app.use('/api'+router.path, router.router);
+            this.app.use('/api' + router.path, router.router);
         });
         this.app.use(errorMiddleware);
     }
 
     public async start(): Promise<void> {
-        this.server = this.app.listen(this.port, () => logInfo(`Server started on port ${this.port}`));
+        this.server = this.app.listen(this.port, () => console.log(`Server started on port ${this.port}`));
     }
 
     public async stop(): Promise<void> {

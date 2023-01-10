@@ -1,9 +1,11 @@
-import { IUserController } from './../../interfaces/userController.interface';
 import * as express from 'express';
-import { wrapController } from '../utils/wraps';
-import { updateSchema, createSchema } from '../joi/validator/user.schema';
+import { createSchema, updateSchema } from '../../../services/dtos/blog.schema';
+import { IUserController } from '../controllers/userController.interface';
+
 import validateRequest from '../joi/joi';
-import { BaseRouter } from '../../core/baseRouter';
+import { wrapController } from '../utils/wraps';
+import { BaseRouter } from './baseRouter';
+
 
 class UserRouter extends BaseRouter<IUserController> {
 
@@ -15,12 +17,12 @@ class UserRouter extends BaseRouter<IUserController> {
 
     public initializeRoutes() {
         this.router.post('/login', wrapController(this.controller.login));
-        this.router.post('', validateRequest(createSchema), wrapController(this.getController().createUser));
+        this.router.post('', validateRequest(createSchema), wrapController(this.controller.createUser));
         this.router.use(this.auth);
-        this.router.get('', wrapController(this.getController().getAllUsers));
-        this.router.get('/:userId', wrapController(this.getController().getUserById));
-        this.router.put('/:userId', validateRequest(updateSchema), wrapController(this.getController().updateUser));
-        this.router.delete('/:userId', wrapController(this.getController().deleteUser));
+        this.router.get('', wrapController(this.controller.getAllUsers));
+        this.router.get('/:userId', wrapController(this.controller.getUserById));
+        this.router.put('/:userId', validateRequest(updateSchema), wrapController(this.controller.updateUser));
+        this.router.delete('/:userId', wrapController(this.controller.deleteUser));
     }
 }
 
