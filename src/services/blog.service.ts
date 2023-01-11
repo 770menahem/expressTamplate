@@ -1,12 +1,12 @@
-import { IBlogRepo } from "../interfaces/repos/blogRepo.interface";
-import { IBlogService } from "../interfaces/services/blogService.interface";
-import { ILogger } from "../log/logger";
-import Blog from "../types/blog.type";
+import { IBlogDal } from '../interfaces/repos/blogDal.interface';
+import { IBlogService } from '../interfaces/services/blogService.interface';
+import { ILogger } from '../log/logger';
+import Blog from '../types/blog.type';
 
 export class BlogService implements IBlogService {
-    private BlogRepo: IBlogRepo;
+    private BlogRepo: IBlogDal;
     private _logger: ILogger;
-    constructor(blogRepo: IBlogRepo, logger: ILogger) {
+    constructor(blogRepo: IBlogDal, logger: ILogger) {
         this.BlogRepo = blogRepo;
         this._logger = logger;
     }
@@ -14,7 +14,6 @@ export class BlogService implements IBlogService {
     public createBlog = async (blog: Blog): Promise<Blog> => {
         this._logger.logInfo({ message: 'BlogService.createBlog created' });
         return await this.BlogRepo.createBlog(blog);
-
     };
 
     public updateBlog = async (blogId: string, description: string) => {

@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { generateToken } from '../auth/token';
 import config from '../config/config';
-import { IUserDal } from '../interfaces/repos/userRepo.interface';
+import { IUserDal } from '../interfaces/repos/userDal.interface';
 import { IUserService } from '../interfaces/services/userService.interface';
 import User from '../types/user.type';
 import { decrypt, encrypt } from '../utils/encrypt';

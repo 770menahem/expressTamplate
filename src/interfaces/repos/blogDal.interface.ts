@@ -1,6 +1,6 @@
 import Blog from '../../types/blog.type';
 
-export interface IBlogRepo {
+export interface IBlogDal {
     createBlog(blog: Blog): Promise<Blog>;
     updateBlog(blogId: string, description: string): Promise<Blog | null>;
     deleteBlog(blogId: string): Promise<Blog | null>;

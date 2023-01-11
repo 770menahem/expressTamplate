@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
-import { IUserDal } from '../../../interfaces/repos/userRepo.interface';
+import { IUserDal } from '../../../interfaces/repos/userDal.interface';
 
 import User from '../../../types/user.type';
 import { BaseRepository } from './baseRepository';
 
 export class UserRepo extends BaseRepository<User> implements IUserDal {
     private UserModel: mongoose.Model<User>;
-
-
 
     public getUserById = async (userId: string): Promise<User | null> => {
         const user = await this.UserModel.findById(userId, { password: 0 });
