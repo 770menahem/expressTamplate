@@ -1,5 +1,5 @@
 import config from './config/config';
-import { initializeApp } from './initializeExpress';
+import { initializeApp } from './initializeApp';
 import { connect } from './infra/mongo/initializeMongo';
 
 const { mongo } = config;

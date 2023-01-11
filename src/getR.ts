@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import { initializeApp } from './initializeExpress';
+import { initializeApp } from './initializeApp';
 
 (async () => {
     const app = initializeApp(10).getApp();
