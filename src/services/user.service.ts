@@ -3,14 +3,17 @@ import { generateToken } from '../auth/token';
 import config from '../config/config';
 import { IUserDal } from '../interfaces/repos/userDal.interface';
 import { IUserService } from '../interfaces/services/userService.interface';
+import { ILogger } from '../log/logger';
 import User from '../types/user.type';
 import { decrypt, encrypt } from '../utils/encrypt';
 
 export class UserService implements IUserService {
     private UserRepo: IUserDal;
+    private _logger: ILogger;
 
-    constructor(userRepo: IUserDal) {
+    constructor(userRepo: IUserDal, logger: ILogger) {
         this.UserRepo = userRepo;
+        this._logger = logger;
     }
 
     public auth = async (token: string) => {
@@ -32,6 +35,8 @@ export class UserService implements IUserService {
             name: user.name,
             password: encrypt(user.password!),
         });
+
+        this._logger.logInfo({ message: 'User created successfully' });
 
         return newUser;
     };

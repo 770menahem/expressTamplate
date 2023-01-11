@@ -1,6 +1,4 @@
-
 type logObject = {
-    level?: string;
     message: string;
     system?: string;
     service?: string;
@@ -8,7 +6,6 @@ type logObject = {
 };
 
 export default logObject;
-
 
 export interface ILogger {
     /**

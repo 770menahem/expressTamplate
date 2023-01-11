@@ -12,8 +12,10 @@ export class BlogService implements IBlogService {
     }
 
     public createBlog = async (blog: Blog): Promise<Blog> => {
+        const newBlog = await this.BlogRepo.createBlog(blog);
         this._logger.logInfo({ message: 'BlogService.createBlog created' });
-        return await this.BlogRepo.createBlog(blog);
+
+        return newBlog;
     };
 
     public updateBlog = async (blogId: string, description: string) => {
