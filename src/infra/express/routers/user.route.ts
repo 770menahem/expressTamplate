@@ -1,16 +1,14 @@
 import * as express from 'express';
-import { createSchema, updateSchema } from '../../../services/dtos/blog.schema';
+import { createSchema, updateSchema } from '../../../services/dtos/user.schema';
 import { IUserController } from '../controllers/userController.interface';
 
 import validateRequest from '../joi/joi';
 import { wrapController } from '../utils/wraps';
 import { BaseRouter } from './baseRouter';
 
-
 class UserRouter extends BaseRouter<IUserController> {
-
     constructor(userController: IUserController, auth: express.RequestHandler) {
-        super(userController, auth)
+        super(userController, auth);
         this.path = '/users';
         this.initializeRoutes();
     }

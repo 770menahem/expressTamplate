@@ -2,6 +2,7 @@ import { IBlogService } from '../src/interfaces/services/blogService.interface';
 import Blog from '../src/types/blog.type';
 import { BlogService } from '../src/services/blog.service';
 import BlogRepoMock from './mocks/blogRepo';
+import Logger from '../src/infra/winston/logger';
 
 let blogService: IBlogService;
 
@@ -9,7 +10,7 @@ jest.setTimeout(60000);
 
 describe('blog service', () => {
     beforeAll(async () => {
-        blogService = new BlogService(new BlogRepoMock());
+        blogService = new BlogService(new BlogRepoMock(), new Logger());
     });
 
     test('create blog', async () => {

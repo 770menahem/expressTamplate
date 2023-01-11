@@ -1,4 +1,3 @@
-
 import { IUserService } from '../src/interfaces/services/userService.interface';
 import { UserService } from '../src/services/user.service';
 import User from '../src/types/user.type';

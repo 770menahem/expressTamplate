@@ -1,7 +1,7 @@
 import User from '../../src/types/user.type';
-import { IUserRepo } from './../../src/interfaces/userRepo.interface';
+import { IUserDal } from './../../src/infra/mongo/repo/userRepo.interface';
 
-class UserRepoMock implements IUserRepo {
+class UserRepoMock implements IUserDal {
     private users: User[] = [
         {
             _id: '1',

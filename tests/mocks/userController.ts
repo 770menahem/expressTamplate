@@ -1,6 +1,6 @@
 import { generateToken } from './../../src/auth/token';
 import { Request, Response } from 'express';
-import { IUserController } from './../../src/interfaces/userController.interface';
+import { IUserController } from '../../src/infra/express/controllers/userController.interface';
 import User from '../../src/types/user.type';
 import { encrypt } from '../../src/utils/encrypt';
 

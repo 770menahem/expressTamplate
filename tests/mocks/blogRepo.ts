@@ -1,7 +1,7 @@
-import { IBlogRepo } from '../../src/interfaces/blogRepo.interface';
+import { IBlogDal } from '../../src/infra/mongo/repo/blogRepo.interface';
 import Blog from '../../src/types/blog.type';
 
-class BlogRepoMock implements IBlogRepo {
+class BlogRepoMock implements IBlogDal {
     private blogs: Blog[] = [
         {
             _id: '1',
