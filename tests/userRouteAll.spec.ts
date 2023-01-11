@@ -8,6 +8,7 @@ import { verify } from 'jsonwebtoken';
 import config from '../src/config/config';
 import UserRepoMock from './mocks/userRepo';
 import { encrypt } from '../src/utils/encrypt';
+import Logger from '../src/infra/winston/logger';
 
 let server: App;
 let token: string;
@@ -22,10 +23,10 @@ describe('User routes', () => {
             return payload.toString();
         });
         const repo = new UserRepoMock();
-        repo.createUser({ _id: '1', name: 'test user', password: encrypt('test') });
-        repo.createUser({ _id: idToDelete, name: 'test user', password: encrypt('test') });
+        repo.create({ _id: '1', name: 'test user', password: encrypt('test') });
+        repo.create({ _id: idToDelete, name: 'test user', password: encrypt('test') });
 
-        const userController = new UserController(new UserService(repo));
+        const userController = new UserController(new UserService(repo, new Logger()));
         const userRouter = new UserRouter(userController, auth.check);
 
         server = new App(5770, [userRouter]);

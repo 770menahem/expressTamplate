@@ -1,4 +1,4 @@
-import { IBlogDal } from '../../src/infra/mongo/repo/blogRepo.interface';
+import { IBlogDal } from '../../src/interfaces/DAL/blogDal.interface';
 import Blog from '../../src/types/blog.type';
 
 class BlogRepoMock implements IBlogDal {
@@ -11,12 +11,12 @@ class BlogRepoMock implements IBlogDal {
         },
     ];
 
-    public createBlog = async (blog: Blog) => {
+    public create = async (blog: Blog) => {
         this.blogs.push(blog);
         return blog;
     };
 
-    public updateBlog = async (blogId: string, description: string) => {
+    public updateDescription = async (blogId: string, description: string) => {
         const blog = this.blogs.find((b) => b._id === blogId);
         if (blog) {
             blog.description = description;
@@ -25,7 +25,7 @@ class BlogRepoMock implements IBlogDal {
         return null;
     };
 
-    public deleteBlog = async (blogId: string) => {
+    public delete = async (blogId: string) => {
         const blog = this.blogs.find((b) => b._id === blogId);
         if (blog) {
             this.blogs = this.blogs.filter((b) => b._id !== blogId);
@@ -34,17 +34,17 @@ class BlogRepoMock implements IBlogDal {
         return null;
     };
 
-    public getBlog = async (blogId: string) => {
+    public getById = async (blogId: string) => {
         const blog = this.blogs.find((b) => b._id === blogId);
 
         return blog || null;
     };
 
-    public getAllBlogs = async () => {
+    public getAll = async () => {
         return this.blogs;
     };
 
-    public getBlogsByAuthor = async (userName: string) => {
+    public getByAuthor = async (userName: string) => {
         const blogs = this.blogs.filter((b) => b.author === userName);
 
         return blogs || null;

@@ -1,3 +1,4 @@
+import Logger from '../src/infra/winston/logger';
 import { IUserService } from '../src/interfaces/services/userService.interface';
 import { UserService } from '../src/services/user.service';
 import User from '../src/types/user.type';
@@ -10,7 +11,7 @@ jest.setTimeout(60000);
 
 describe('UserService', () => {
     beforeAll(async () => {
-        userService = new UserService(new UserRepoMock());
+        userService = new UserService(new UserRepoMock(), new Logger());
     });
 
     test('create user', async () => {

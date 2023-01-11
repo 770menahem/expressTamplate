@@ -1,5 +1,5 @@
+import { IUserDal } from '../../src/interfaces/DAL/userDal.interface';
 import User from '../../src/types/user.type';
-import { IUserDal } from './../../src/infra/mongo/repo/userRepo.interface';
 
 class UserRepoMock implements IUserDal {
     private users: User[] = [
@@ -9,22 +9,22 @@ class UserRepoMock implements IUserDal {
             password: 'qiYCgeA3lHqOGYsQVCkmZA==',
         },
     ];
-    public getUserById = async (userId: string): Promise<User | null> => {
+    public getById = async (userId: string): Promise<User | null> => {
         const user = this.users.find((u) => u._id === userId);
         return user ? ({ _id: user._id, name: user.name } as User) : null;
     };
 
-    public getUserByNameAndPassword = async (name: string, password: string): Promise<User | null> => {
+    public getByNameAndPassword = async (name: string, password: string): Promise<User | null> => {
         const user = this.users.find((u) => u.name === name && u.password === password);
         return user ? ({ _id: user._id, name: user.name } as User) : null;
     };
 
-    public createUser = async (user: User) => {
+    public create = async (user: User) => {
         this.users.push(user);
         return user;
     };
 
-    public updateUser = async (userId: string, name: string) => {
+    public updateName = async (userId: string, name: string) => {
         const user: User | undefined = this.users.find((u) => u._id === userId);
         if (user) {
             user.name = name;
@@ -33,7 +33,7 @@ class UserRepoMock implements IUserDal {
         return null;
     };
 
-    public deleteUser = async (userId: string) => {
+    public delete = async (userId: string) => {
         const user = this.users.find((u) => u._id === userId);
         if (user) {
             this.users = this.users.filter((u) => u._id !== userId);
@@ -42,12 +42,12 @@ class UserRepoMock implements IUserDal {
         return null;
     };
 
-    public getUser = async (userId: string) => {
+    public get = async (userId: string) => {
         const user = this.users.find((u) => u._id === userId);
         return user ? ({ _id: user._id, name: user.name } as User) : null;
     };
 
-    public getAllUsers = async () => {
+    public getAll = async () => {
         return this.users.map((user) => ({ _id: user._id, name: user.name } as User));
     };
 }
