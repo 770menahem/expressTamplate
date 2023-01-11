@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { IBlogController } from './../../src/interfaces/blogController.interface';
+import { IBlogController } from '../../src/infra/express/controllers/blogController.interface';
+
 import Blog from '../../src/types/blog.type';
 
 class BlogControllerMock implements IBlogController {
@@ -8,7 +9,7 @@ class BlogControllerMock implements IBlogController {
             _id: '1',
             title: 'test blog',
             description: 'test blog content',
-            author: 'test author',
+            author: '62bbf56b05013d64ec58e7b6',
         },
         {
             _id: 'todelete',

@@ -1,6 +1,6 @@
-import initializeMongo from './mongo/initializeMongo';
 import config from './config/config';
-import { initializeExpress } from './initializeExpress';
+import { initializeApp } from './initializeApp';
+import { connect } from './infra/mongo/initializeMongo';
 
 const { mongo } = config;
 
@@ -9,11 +9,11 @@ const { mongo } = config;
  * Calls all the initialization functions.
  */
 const main = async () => {
-    await initializeMongo(mongo.uri);
+    await connect(mongo.uri);
 
     const port = config.server.port || 2770;
 
-    const app = initializeExpress(port);
+    const app = initializeApp(port);
 
     app.start();
 };

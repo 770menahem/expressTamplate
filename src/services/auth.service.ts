@@ -1,17 +1,20 @@
-import { Request, Response, NextFunction } from 'express-serve-static-core';
-import IAuth from '../../src/infra/express/utils/auth.interface';
+import { NextFunction, Request, Response } from 'express';
+import config from '../config/config';
+import IAuth from '../infra/express/utils/auth.interface';
 
-class AuthMock implements IAuth {
+class Auth implements IAuth {
     public checkAuth: (token: string) => Promise<string | null>;
 
-    constructor(checkAuth: (token: string) => Promise<string | null>) {
-        this.checkAuth = checkAuth;
+    constructor(auth: (token: string) => Promise<string | null>) {
+        this.checkAuth = auth;
     }
 
     public check = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        if (!config.server.needAuth) return next();
+
         try {
             const token: string = req.header('Authorization') as string;
-            const userId = this.checkAuth(token);
+            const userId = await this.checkAuth(token);
             if (!userId) {
                 res.status(401).send({ error: 'unauthorized', status: 401 });
             } else {
@@ -24,4 +27,4 @@ class AuthMock implements IAuth {
     };
 }
 
-export default AuthMock;
+export default Auth;
