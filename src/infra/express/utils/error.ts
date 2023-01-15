@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import * as express from 'express';
 
 export class ServiceError extends Error {
@@ -32,6 +33,10 @@ export const errorMiddleware = (error: Error, _req: express.Request, res: expres
             type: error.name,
             message: 'your data is not valid maybe you have a duplicate data',
             errorMessage: error.message,
+        });
+    }else if (error.name === 'AxiosError' && (error as AxiosError).response?.status === 404) {
+        res.status(404).send({
+            message: error.message,
         });
     } else {
         res.status(500).send({

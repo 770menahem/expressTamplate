@@ -40,6 +40,9 @@ class App {
             this.app.use('/api' + router.path, router.router);
         });
         this.app.use(errorMiddleware);
+        this.app.use('*', (_req, res) => {
+            res.status(404).send('Invalid Route');
+        });
     }
 
     public async start(): Promise<void> {

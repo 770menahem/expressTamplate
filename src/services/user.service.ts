@@ -1,11 +1,9 @@
-import { verify } from 'jsonwebtoken';
 import { generateToken } from '../auth/token';
-import config from '../config/config';
 import { IUserDal } from '../interfaces/DAL/userDal.interface';
 import { IUserService } from '../interfaces/services/userService.interface';
 import { ILogger } from '../log/logger';
 import User from '../types/user.type';
-import { decrypt, encrypt } from '../utils/encrypt';
+import {  encrypt } from '../utils/encrypt';
 
 export class UserService implements IUserService {
     private UserRepo: IUserDal;
@@ -16,19 +14,7 @@ export class UserService implements IUserService {
         this._logger = logger;
     }
 
-    public auth = async (token: string) => {
-        const payload: any = verify(token, config.keys.tokenKey);
 
-        if (!payload || !payload.userIdEnc) return null;
-
-        const userId = decrypt(payload.userIdEnc);
-
-        const user = await this.getUserById(userId);
-
-        if (!user) return null;
-
-        return userId;
-    };
 
     public createUser = async (user: User) => {
         const newUser = await this.UserRepo.create({

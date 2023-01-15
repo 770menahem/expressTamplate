@@ -8,5 +8,4 @@ export interface IUserService {
     getAllUsers(): Promise<User[] | null>;
     getUserByNameAndPassword(name: string, password: string): Promise<User | null>;
     login(name: string, password: string): Promise<{ user: User; token: string } | null>;
-    auth(token: string): Promise<string | null>;
 }
