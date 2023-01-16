@@ -40,6 +40,8 @@ class App {
             this.app.use('/api' + router.path, router.router);
         });
         this.app.use(errorMiddleware);
+        this.app.use('/isAlive', (_req, res) => (checkConnections() ? res.status(200).send('OK') : res.status(500).send('Not OK')));
+        this.app.use('*', (_req, res) => res.status(404).send('Invalid route'));
     }
 
     public async start(): Promise<void> {
